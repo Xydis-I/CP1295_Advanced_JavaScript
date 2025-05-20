@@ -24,7 +24,7 @@ while (true) {
     }
 
     else if (userInput.split(" ")[0].toLowerCase() == "get" && Number.isInteger(parseInt(userInput.split(" ")[1]))) {
-        if (parseInt(userInput.split(" ")[1]) > contacts.length) {
+        if (parseInt(userInput.split(" ")[1]) > contacts.length || parseInt(userInput.split(" ")[1]) < 1) {
             alert(`No data for #${parseInt(userInput.split(" ")[1])}`);
         } else {
             let contact = contacts[parseInt(userInput.split(" ")[1]) - 1].split("|");
