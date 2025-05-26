@@ -40,8 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let today = new Date();
         today.setHours(0,0,0,0);
 
-        console.log(dob >= today);
-
         if (!$("form").checkValidity() || (!emailPattern.test(email.value) && !phonePattern.test(phone.value)) || dob >= today) {
             if (!emailPattern.test(email.value) && !phonePattern.test(phone.value)) {
                 email.nextElementSibling.textContent = "Please enter an email or phone.";

@@ -26,7 +26,13 @@ const guessButtonClick = () => {
     document.querySelector("#error_message").textContent = "";
     document.querySelector("#message").textContent = "";
 
-    const guess = getGuess();
+    let guess;
+
+    try {
+        guess = getGuess();
+    } catch (error) {
+        document.querySelector("#error_message").textContent = error.message;
+    }
 
     let message = "";
     if (guess < randomNum) {
