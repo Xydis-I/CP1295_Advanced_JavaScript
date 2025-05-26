@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     $("form").addEventListener("submit", evt => {
+        let elements = $("form").elements;
+        for (let index = 0; index < 5; index++) {
+            elements[index].nextElementSibling.textContent = "";
+        }
 
         const emailPattern = /\S+@\S+\.\S+/;
         const phonePattern = /\d{3}[\-]\d{3}[\-]\d{4}/;
