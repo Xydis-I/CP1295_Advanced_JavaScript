@@ -23,17 +23,17 @@ function createCol(text) {
     return col;
 }
 
-function displayInvoices(invoices) {
-    const table = getElement("#invoice_table");
+// function displayInvoices(invoices) {
+//     const table = getElement("#invoice_table");
 
-    // clear any existing invoices (but not header row)
-    const rows = document.querySelectorAll("#invoice_table tr");
-    for (let i = 1; i < rows.length; i++) {
-        table.removeChild(rows[i]);
-    }
+//     // clear any existing invoices (but not header row)
+//     const rows = document.querySelectorAll("#invoice_table tr");
+//     for (let i = 1; i < rows.length; i++) {
+//         table.removeChild(rows[i]);
+//     }
 
-    // add one row for each invoice
-}
+//     // add one row for each invoice
+// }
  
 function displayInvoices(invoices) {
     const table = getElement("#invoice_table");
@@ -45,6 +45,14 @@ function displayInvoices(invoices) {
     }
 
     // add one row for each invoice
+    invoices.forEach(invoice => {
+        const row = document.createElement("tr");
+        row.appendChild(createCol(invoice[0]));
+        row.appendChild(createCol(invoice[1].toFixed(2)));
+        row.appendChild(createCol(new Date(invoice[2]).toISOString("")));
+        row.appendChild(createCol(invoice[3]));
+        table.appendChild(row);
+    });
 }
  
 function filterInvoices() {
