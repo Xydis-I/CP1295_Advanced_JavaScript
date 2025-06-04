@@ -22,18 +22,6 @@ function createCol(text) {
     col.appendChild(textNode);
     return col;
 }
-
-// function displayInvoices(invoices) {
-//     const table = getElement("#invoice_table");
-
-//     // clear any existing invoices (but not header row)
-//     const rows = document.querySelectorAll("#invoice_table tr");
-//     for (let i = 1; i < rows.length; i++) {
-//         table.removeChild(rows[i]);
-//     }
-
-//     // add one row for each invoice
-// }
  
 function displayInvoices(invoices) {
     const table = getElement("#invoice_table");
@@ -49,7 +37,7 @@ function displayInvoices(invoices) {
         const row = document.createElement("tr");
         row.appendChild(createCol(invoice[0]));
         row.appendChild(createCol(invoice[1].toFixed(2)));
-        row.appendChild(createCol(new Date(invoice[2]).toISOString("")));
+        row.appendChild(createCol(new Date(invoice[2]).toDateString()));
         row.appendChild(createCol(invoice[3]));
         table.appendChild(row);
     });
@@ -65,9 +53,21 @@ function filterInvoices() {
         const endDate   = new Date(getElement("#end_date").value);        
 
         // add code that finishes this filter
+        return ((startDate <= invoiceDate) && (invoiceDate <= endDate));
     });
 
     // filter by paid status
+    filtered = filtered.filter(invoice => {
+        const invoicePaidStatus = invoice[3];
+        
+        if (getElement("#both").checked) {
+            return true;
+        } else if (getElement("#paid").checked) {
+            return invoicePaidStatus == true;
+        } else if (getElement("#unpaid").checked) {
+            return invoicePaidStatus == false;
+        }
+    });
 
     // display the filtered data
     displayInvoices(filtered);
