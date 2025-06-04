@@ -30,7 +30,6 @@ const displayScores = scores => {
     let total = 0;
     filtered.forEach(score => {
         total += parseFloat(score[2]);
-        console.log(score[2]);
     });
 
     // calculate the average 
@@ -55,16 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
     getElement("#clear_scores").addEventListener("click", () => {
         scores = [];
         getElement("#score_list").textContent = "";
+        getElement("#avg").textContent = "";
     });
 
     getElement("#sort").addEventListener("change", () => {
         displayScores(scores);
-        console.log("Change sort");
     });
     
     getElement("#filter").addEventListener("change", () => {
         displayScores(scores);
-        console.log("Change filter");
     });
 
     // set focus on first text box on load

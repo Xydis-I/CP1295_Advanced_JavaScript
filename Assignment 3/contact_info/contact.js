@@ -4,11 +4,7 @@ const getElement = selector => document.querySelector(selector);
 const padNum = num => num.toString().padStart(2, "0");
 
 const clearContact = () => {
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("phone");
-    sessionStorage.removeItem("zip");
-    sessionStorage.removeItem("dob");
+    sessionStorage.removeItem("contact");
 };
 const saveContact = () => {
     sessionStorage.contact = JSON.stringify([
@@ -19,7 +15,12 @@ const saveContact = () => {
         new Date(getElement("#dob").value + "T00:00:00")]);
 };
 const displayContact = () => {
-    let contact = JSON.parse(sessionStorage.contact);
+    let contact = [];
+    try {
+        contact = JSON.parse(sessionStorage.contact);
+    } catch (error) {
+        console.log("No contact currently in storage.");
+    }
     getElement("#name").value = contact[0] ?? "";
     getElement("#email").value = contact[1] ?? "";
     getElement("#phone").value = contact[2] ?? "";
