@@ -1,6 +1,6 @@
+"use strict";
+
 class MyEvent {
-    name;
-    date;
     #datestring;
 
     constructor(name, datestring) {
