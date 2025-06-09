@@ -1,6 +1,10 @@
 "use strict";
 
 const validation = {
+    "quarters": 0,
+    "dimes": 0,
+    "nickels": 0,
+    "pennies": 0,
     isNumeric(value) {
         return !isNaN(value);
     },
