@@ -3,6 +3,8 @@ const $ = selector => document.querySelector(selector);
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    let order = new Order();
+
     $("#add_order").addEventListener("click", () => {
         // Burger
         if ($("#burger_regular").checked || $("#burger_cheese").checked || $("#burger_single").checked || $("#burger_double").checked) {
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            order.add(burger);
             console.log(burger);
         }
 
@@ -50,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            order.add(drink);
             console.log(drink);
         }
 
@@ -71,8 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            order.add(fries);
             console.log(fries);
         }
+
+        console.log("Total: " + order.total);
     }); 
 
     $("#clear_order").addEventListener("click", () => {

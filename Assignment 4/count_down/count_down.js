@@ -4,7 +4,7 @@ const getElement = selector => document.querySelector(selector);
 
 document.addEventListener("DOMContentLoaded", () => {
     getElement("#countdown").addEventListener("click", () => {
-        let event = new MyEvent(getElement("#event").value, getElement("#date").value)
+        let event = new Event(getElement("#event").value, getElement("#date").value)
 
         const messageLbl = getElement("#message");  
 
