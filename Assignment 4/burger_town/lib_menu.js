@@ -22,6 +22,28 @@ class Burger {
         }
         return price;
     }
+
+    get element() {
+        let element = document.createElement("div");
+        let line = document.createElement("h4");
+
+        if (this.type != "regular") {
+            line.textContent = `${this.size} ${this.type}burger - $${this.price.toFixed(2)}`
+        } else {
+            line.textContent = `${this.size} burger - $${this.price.toFixed(2)}`
+        }
+
+        let toppingElements = document.createElement("ul");
+        this.toppings.forEach(topping => {
+            let addon = document.createElement("li");
+            addon.textContent = topping;
+            toppingElements.appendChild(addon);
+        });
+
+        element.appendChild(line);
+        element.appendChild(toppingElements);
+        return element;
+    }
 }
 
 class Drink {
@@ -53,13 +75,12 @@ class Drink {
 
     get element() {
         let element = document.createElement("div");
-        let line = document.createElement("b");
-        if (this.type != "regular") {
-            line.textContent = `${this.size} ${this.type}burger - $${this.price}`
-        } else {
-            line.textContent = `${this.size} burger - $${this.price}`
-        }
+        let line = document.createElement("h4");
+        
+        line.textContent = `${this.size} ${this.type} - $${this.price.toFixed(2)}`
+
         element.appendChild(line);
+        return element;
     }
 }
 
@@ -85,6 +106,20 @@ class Fries {
             return price * 3;
         }
     }
+
+    get element() {
+        let element = document.createElement("div");
+        let line = document.createElement("h4");
+        
+        if (this.type == "regular") {
+            line.textContent = `${this.size} fries - $${this.price.toFixed(2)}`
+        } else {
+            line.textContent = `${this.size} ${this.type} fries - $${this.price.toFixed(2)}`
+        }
+        
+        element.appendChild(line);
+        return element;
+    }
 }
 
 class Order {
@@ -94,6 +129,36 @@ class Order {
 
     add(item) {
         this.items.push(item);
+    }
+
+    clear() {
+        this.items = [];
+    }
+
+    generateMenu(targetDiv) {
+        targetDiv.innerHTML = "";
+
+        let burgers = document.createElement("div");
+        let drinks = document.createElement("div");
+        let fries = document.createElement("div");
+
+        this.items.forEach(item => {
+            if (item.constructor.name == "Burger") {
+                burgers.appendChild(item.element);
+            } else if (item.constructor.name == "Drink") {
+                drinks.appendChild(item.element);
+            } else {
+                fries.appendChild(item.element);
+            }
+        });
+
+        targetDiv.appendChild(burgers);
+        targetDiv.appendChild(drinks);
+        targetDiv.appendChild(fries);
+
+        let total = document.createElement("h2");
+        total.textContent = `Total: $${this.total.toFixed(2)}`
+        targetDiv.appendChild(total);
     }
 
     get total() {

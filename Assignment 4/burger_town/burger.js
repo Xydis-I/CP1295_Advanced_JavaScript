@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             order.add(burger);
-            console.log(burger);
         }
 
         // Drink
@@ -54,11 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             order.add(drink);
-            console.log(drink);
         }
 
         // Fries
-        if ($("#fry_regular").checked || $("#fry_curly").checked || $("#drink_small").checked || $("#drink_medium").checked || $("#drink_large").checked) {
+        if ($("#fry_regular").checked || $("#fry_curly").checked || $("#fry_small").checked || $("#fry_medium").checked || $("#fry_large").checked) {
             let fries = new Fries();
 
             const types = document.getElementsByName("fry_type");
@@ -76,14 +74,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             order.add(fries);
-            console.log(fries);
         }
 
-        console.log("Total: " + order.total);
+        order.generateMenu($("#order_details"));
     }); 
 
     $("#clear_order").addEventListener("click", () => {
-        
+        order.clear();
+        $("#order_details").innerHTML = "";
+
+        let inputs = document.getElementsByTagName("input");
+        for (const input of inputs) {
+            if (input.checked) {
+                input.checked = false;
+            }
+        }
     });
-    
 }); 
