@@ -13,29 +13,17 @@ const calculateChange = () => {
     // get the number of cents from the user
     let cents = Math.floor(parseInt(document.querySelector("#cents").value));
 
-    if (!validation.isInRange(cents, 0, 99)) {
+    if (!change.isInRange(cents, 0, 99)) {
         alert("Please enter a valid number between 0 and 99");
         document.querySelector("#cents").select();
     } else {
-        // calculate the number of quarters
-        validation.quarters = Math.floor(cents / 25);        // get number of quarters
-        cents = cents % 25;         // assign the remainder to the cents variable
-
-        // calculate the number of dimes
-        validation.dimes = Math.floor(cents / 10);           // get number of dimes
-        cents = cents % 10;         // assign the remainder to the cents variable
-
-        // calculate the number of nickels
-        validation.nickels = Math.floor(cents / 5);
-
-        // calculate the number of nickels and pennies
-        validation.pennies = cents % 5;
+        change.calculate(cents);
 
         // display the results of the calculations
-        document.querySelector("#quarters").value = validation.quarters;
-        document.querySelector("#dimes").value = validation.dimes;
-        document.querySelector("#nickels").value = validation.nickels;
-        document.querySelector("#pennies").value = validation.pennies;
+        document.querySelector("#quarters").value = change.quarters;
+        document.querySelector("#dimes").value = change.dimes;
+        document.querySelector("#nickels").value = change.nickels;
+        document.querySelector("#pennies").value = change.pennies;
     }
 };
 

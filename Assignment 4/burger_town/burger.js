@@ -77,6 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         order.generateMenu($("#order_details"));
+
+        let inputs = document.getElementsByTagName("input");
+        for (const input of inputs) {
+            if (input.checked) {
+                input.checked = false;
+            }
+        }
     }); 
 
     $("#clear_order").addEventListener("click", () => {
