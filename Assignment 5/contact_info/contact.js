@@ -1,4 +1,8 @@
 "use strict";
+
+import Contact from "./lib_contact.js";
+import Dob from "./lib_dob.js";
+
 const getElement = selector => document.querySelector(selector);
 
 const padNum = num => num.toString().padStart(2, "0");
@@ -12,11 +16,11 @@ const saveContact = (...contact) => {
 const displayContact = () => {
     const contact = JSON.parse(sessionStorage.contact ?? null);
     if (Array.isArray(contact)) {
-        getElement("#name").value = contact[0];
-        getElement("#email").value = contact[1];
-        getElement("#phone").value = contact[2];
-        getElement("#zip").value = contact[3];
-        const dt = new Date(contact[4]);
+        getElement("#name").value = contact[0]["name"];
+        getElement("#email").value = contact[0]["email"];
+        getElement("#phone").value = contact[0]["phone"];
+        getElement("#zip").value = contact[0]["zip"];
+        const dt = new Dob(contact[0]["dob"]);
         if(!(dt.toString() == "Invalid Date")) {
             const str = `${dt.getFullYear()}-${padNum(dt.getMonth() + 1)}-${padNum(dt.getDate())}`;
             getElement("#dob").value = str;
@@ -26,11 +30,11 @@ const displayContact = () => {
 const displayConfirmPage = () => {
     const contact = JSON.parse(sessionStorage.contact ?? null);
     if (Array.isArray(contact)) {
-        getElement("#lbl_name").textContent = contact[0];
-        getElement("#lbl_email").textContent = contact[1];
-        getElement("#lbl_phone").textContent = contact[2];
-        getElement("#lbl_zip").textContent = contact[3];
-        getElement("#lbl_dob").textContent = new Date(contact[4]).toDateString() ?? "";
+        getElement("#lbl_name").textContent = contact[0]["name"];
+        getElement("#lbl_email").textContent = contact[0]["email"];
+        getElement("#lbl_phone").textContent = contact[0]["phone"];
+        getElement("#lbl_zip").textContent = contact[0]["zip"];
+        getElement("#lbl_dob").textContent = new Dob(contact[0]["dob"]).toDateString() ?? "";
     }
 };
 
@@ -70,13 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = getElement("#email");
             const phone = getElement("#phone");
 
-            let msg = (email.value == "" && phone.value == "") ? "Please enter an email or phone." : "";
+            let msg = (!Contact.isValidEmail(email.value) && !Contact.isValidPhone(phone.value)) ? "Please enter an email or phone." : "";
             email.setCustomValidity(msg);
 
             // validate dob 
             const dob = getElement("#dob"); 
             const dobValue = new Date(dob.value + "T00:00:00");   // add time to correct UTC/local time issue
-            if (dobValue.toString() == "Invalid Date") {
+            if (!Dob.isValid(dobValue)) {
                 msg = "Please enter a valid DOB."
             } else {
                 let today = new Date();
@@ -90,8 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 evt.preventDefault();
             } else {
                 // save contact info to web storage
-                saveContact(getElement("#name").value, email.value, 
-                    phone.value, getElement("#zip").value, dobValue);
+                saveContact(new Contact(getElement("#name").value, email.value, 
+                    phone.value, getElement("#zip").value, new Dob(dobValue)));
             }
         });
 
