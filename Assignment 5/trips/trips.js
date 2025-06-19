@@ -7,8 +7,6 @@ import { isEmptyString, isNegative, isNumeric } from "./lib_validation.js";
 const getElement = selector => document.querySelector(selector);
 
 document.addEventListener("DOMContentLoaded", () => {
-    //const trips = new Trips();
-
     getElement("#add_trip").addEventListener("click", () => {
         const msgElement = getElement("#msg");
         msgElement.textContent = "";  // clear any previous message
